@@ -20,10 +20,16 @@ WHITE		=	"\033[0;37m"
 END			=	"\033[0m"
 
 SRC += comb_and.c
+SRC += cons.c
 SRC += noneof.c
 SRC += oneof.c
+SRC += parg_range.c
 SRC += parg_str.c
+SRC += run_parser.c
 SRC += run_pfun.c
+SRC += satisfy.c
+SRC += space.c
+SRC += uni.c
 SRC += uni_manyrange.c
 
 OBJECTS		=	$(addprefix $(BUILDDIR)/, $(SRC:%.c=%.o))

@@ -6,7 +6,7 @@
 /*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 11:28:35 by qle-guen          #+#    #+#             */
-/*   Updated: 2016/10/19 14:21:02 by qle-guen         ###   ########.fr       */
+/*   Updated: 2016/10/19 15:47:20 by qle-guen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,9 @@ typedef union			u_parg
 {
 	char				c;
 	char				*s;
+	int					(*f)(char);
 	t_range				r;
 }						t_parg;
-
-typedef struct			s_pstate
-{
-	char				*inp;
-	char				*pstack;
-}						t_pstate;
 
 typedef union u_pfun_t	t_pfun_t;
 
@@ -42,13 +37,13 @@ typedef struct			s_pfun
 	int					type;
 }						t_pfun;
 
-typedef struct			s_const
+typedef struct			s_cons
 {
 	char				*(*f)(t_parg, char *);
 	t_parg				arg;
-}						t_const;
-# define CONST			1 << 0
-# define RUNCONST(x, i)	x.t->const_t.f(x.t->const_t.arg, i)
+}						t_cons;
+# define CONS			1 << 0
+# define RUNCONS(x, i)	x.t->cons.f(x.t->cons.arg, i)
 
 typedef struct			s_comb
 {
@@ -58,26 +53,33 @@ typedef struct			s_comb
 }						t_comb;
 
 # define COMB			1 << 1
-# define RUNCOMB(x, i)	x.t->comb_t.f(x.t->comb_t.p1, x.t->comb_t.p2, i)
+# define RUNCOMB(x, i)	x.t->comb.f(x.t->comb.p1, x.t->comb.p2, i)
 
 typedef struct			s_uni
 {
 	char				*(*f)(t_parg, t_pfun, char *inp);
-	t_pfun				p;
 	t_parg				arg;
+	t_pfun				p;
 }						t_uni;
 
 # define UNI			1 << 2
-# define RUNUNI(x, i)	x.t->uni_t.f(x.t->uni_t.arg, x.t->uni_t.p, i)
+# define RUNUNI(x, i)	x.t->uni.f(x.t->uni.arg, x.t->uni.p, i)
 
 typedef union			u_pfun_t
 {
-	t_const				const_t;
-	t_comb				comb_t;
-	t_uni				uni_t;
+	t_cons				cons;
+	t_comb				comb;
+	t_uni				uni;
 }						t_pfun_t;
 
 char					*run_pfun(t_pfun p, char *inp);
-char					*com_and(t_pfun p1, t_pfun p2, char *inp);
+char					*comb_and(t_pfun p1, t_pfun p2, char *inp);
+char					*space(t_parg arg, char *inp);
+char					*satisfy(t_parg arg, char *inp);
+t_pfun			uni(char *(*f)(t_parg, t_pfun, char *), t_pfun pfun, t_parg arg);
+t_pfun			cons(char *(*f)(t_parg, char *), t_parg arg);
+t_parg			parg_range(int a, int b);
+char		*uni_manyrange(t_parg arg, t_pfun p, char *inp);
+char		*run_parser(char *fmt, char *inp);
 
 #endif

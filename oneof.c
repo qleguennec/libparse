@@ -6,7 +6,7 @@
 /*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 11:32:04 by qle-guen          #+#    #+#             */
-/*   Updated: 2016/10/19 14:09:32 by qle-guen         ###   ########.fr       */
+/*   Updated: 2016/10/19 15:47:03 by qle-guen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char		*oneof(t_parg arg, char *inp)
 	while (*arg.s)
 	{
 		if (*arg.s == *inp)
-			return (inp + 1);
+			return (inp);
 		arg.s++;
 	}
 	return (NULL);

@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   uni_manyrange.c                                    :+:      :+:    :+:   */
+/*   uni.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/19 12:57:20 by qle-guen          #+#    #+#             */
-/*   Updated: 2016/10/19 15:47:21 by qle-guen         ###   ########.fr       */
+/*   Created: 2016/10/19 14:49:41 by qle-guen          #+#    #+#             */
+/*   Updated: 2016/10/19 15:35:27 by qle-guen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libparse.h"
 
-char		*uni_manyrange(t_parg arg, t_pfun p, char *inp)
+t_pfun			uni(char *(*f)(t_parg, t_pfun, char *), t_pfun pfun, t_parg arg)
 {
-	int		count;
+	t_pfun		ret;
 
-	count = 0;
-	while (*inp)
-	{
-		if (run_pfun(p, inp))
-			count++;
-		else
-			break ;
-		inp++;
-	}
-	if (arg.r.a == -1)
-		return (inp);
-	if (count >= arg.r.a && (arg.r.b == -1 || count <= arg.r.b))
-		return (inp);
-	return (NULL);
+	ret.t = malloc(sizeof *ret.t);
+	ret.t->uni.f = f;
+	ret.t->uni.p = pfun;
+	ret.t->uni.arg = arg;
+	ret.type = UNI;
+	return (ret);
 }

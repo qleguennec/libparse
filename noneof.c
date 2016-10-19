@@ -6,7 +6,7 @@
 /*   By: qle-guen <qle-guen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 12:30:25 by qle-guen          #+#    #+#             */
-/*   Updated: 2016/10/19 14:11:58 by qle-guen         ###   ########.fr       */
+/*   Updated: 2016/10/19 15:47:08 by qle-guen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ char		*noneof(t_parg arg, char *inp)
 			return (NULL);
 		arg.s++;
 	}
-	return (inp + 1);
+	return (inp);
 }
